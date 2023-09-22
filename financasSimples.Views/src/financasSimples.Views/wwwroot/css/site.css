@@ -1,0 +1,40 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+
+/*** Posicionamento do radapé ***/
+/*.container {
+  position: relative;
+}*/
+
+main {
+  padding-bottom: 100px;    /* altura do rodapé */
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;            /* altura do rodapé */
+}
+/*** Fim do Posicionamento do radapé ***/
+
+#ImgCadProduto {
+  height: 200px;
+}

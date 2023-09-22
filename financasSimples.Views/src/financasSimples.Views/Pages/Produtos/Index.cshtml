@@ -1,0 +1,71 @@
+﻿@page
+@using financasSimples.Views.ViewsModels
+@model IndexModel
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<h4>Lista de Produtos</h4>
+<hr>
+<a class="btn btn-primary my-4" asp-page="/Produtos/Create">Cadastrar</a>
+
+@if(Model._produto.Count > 0){
+<table class="table">
+    <thead class="table-success">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model._produto[0].ImagemProdutoDto)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model._produto[0].NomeProdutoDto)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model._produto[0].VolumeProdutoDto)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model._produto[0].MarcaProdutoDto)</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model._produto)
+        {
+            <tr>
+                <td>
+                    <img src="data:image/*;base64,@Html.DisplayFor(modelitem =>item.ImagemProdutoDto)" alt=""> 
+                </td>
+                <td>@Html.DisplayFor(modelitem =>item.NomeProdutoDto)</td>
+                <td>@Html.DisplayFor(modelitem =>item.VolumeProdutoDto)</td>
+                <td>@Html.DisplayFor(modelitem =>item.MarcaProdutoDto)</td>
+                <td class="fs-4">
+                    <a asp-page="/Produtos/Edit" asp-route-id="@item.IdProdutoDto">
+                        <i class="bi bi-pencil text-warning"></i> 
+                    </a> |
+                    <a asp-page="/Produtos/Details" asp-route-id="@item.IdProdutoDto">
+                        <i class="bi bi-file-text text-primary"></i>
+                    </a> |
+                    <a onclick="PreenchePartialExclusao(@item.IdProdutoDto, '@item.NomeProdutoDto');" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="bi bi-trash text-danger"></i>
+                    </a> 
+                </td>
+            </tr>
+            
+        }
+  </tbody>
+</table>
+
+//Valores de id e nome modificados via javascript
+<partial name="/Pages/_PartialModalDelete.cshtml" model='new DeletePartialViewModel 
+                                                                { 
+                                                                    Id=0, 
+                                                                    Nome="Sem Nome"
+                                                                }'/>
+}else
+{
+    <h2>Não existem produtos cadastrados!</h2>
+}
+
+@section Scripts {
+    <style>
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+        img {
+            width: 150px;
+        }
+    </style>
+}

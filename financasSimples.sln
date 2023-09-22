@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Domain", "financasSimples.Domain\financasSimples.Domain.csproj", "{CF471591-E479-41D6-8599-82D564B4DF65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Application", "financasSimples.Application\financasSimples.Application.csproj", "{B5160BB3-EF59-4F7A-A905-B0EAFF0D9B3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Infra", "financasSimples.Infra\financasSimples.Infra.csproj", "{9D37D8C6-C0AB-4A22-A059-B838724A4C68}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "financasSimples.Api", "financasSimples.Api", "{026B9642-A062-45E7-ADCB-AEEDD774A6FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E818E8AA-DA1D-4A45-8D71-E6CB42420E05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Api", "financasSimples.Api\src\financasSimples.Api\financasSimples.Api.csproj", "{9A1E39C8-9A7B-4128-A7D8-7ED85A2BC7FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.IoC", "financasSimples.IoC\financasSimples.IoC.csproj", "{8EDDB57B-E9CB-4F56-A9F4-D7D3AB6FDC1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "financasSimples.Views", "financasSimples.Views", "{1620BDA3-A61A-4650-A4B1-69624BC015E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0BDD4B22-0338-46C0-91D4-FC3CB34969F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Views", "financasSimples.Views\src\financasSimples.Views\financasSimples.Views.csproj", "{6A008344-1358-4E60-90E0-6E8D03BF0EF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF471591-E479-41D6-8599-82D564B4DF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF471591-E479-41D6-8599-82D564B4DF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF471591-E479-41D6-8599-82D564B4DF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF471591-E479-41D6-8599-82D564B4DF65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5160BB3-EF59-4F7A-A905-B0EAFF0D9B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5160BB3-EF59-4F7A-A905-B0EAFF0D9B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5160BB3-EF59-4F7A-A905-B0EAFF0D9B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5160BB3-EF59-4F7A-A905-B0EAFF0D9B3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D37D8C6-C0AB-4A22-A059-B838724A4C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D37D8C6-C0AB-4A22-A059-B838724A4C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D37D8C6-C0AB-4A22-A059-B838724A4C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D37D8C6-C0AB-4A22-A059-B838724A4C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A1E39C8-9A7B-4128-A7D8-7ED85A2BC7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1E39C8-9A7B-4128-A7D8-7ED85A2BC7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1E39C8-9A7B-4128-A7D8-7ED85A2BC7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1E39C8-9A7B-4128-A7D8-7ED85A2BC7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDDB57B-E9CB-4F56-A9F4-D7D3AB6FDC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDDB57B-E9CB-4F56-A9F4-D7D3AB6FDC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDDB57B-E9CB-4F56-A9F4-D7D3AB6FDC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDDB57B-E9CB-4F56-A9F4-D7D3AB6FDC1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E818E8AA-DA1D-4A45-8D71-E6CB42420E05} = {026B9642-A062-45E7-ADCB-AEEDD774A6FC}
+		{9A1E39C8-9A7B-4128-A7D8-7ED85A2BC7FA} = {E818E8AA-DA1D-4A45-8D71-E6CB42420E05}
+		{0BDD4B22-0338-46C0-91D4-FC3CB34969F4} = {1620BDA3-A61A-4650-A4B1-69624BC015E0}
+		{6A008344-1358-4E60-90E0-6E8D03BF0EF5} = {0BDD4B22-0338-46C0-91D4-FC3CB34969F4}
+	EndGlobalSection
+EndGlobal

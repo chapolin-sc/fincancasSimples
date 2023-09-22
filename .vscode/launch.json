@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-web",
+            "program": "${workspaceFolder}/financasSimples.Views/src/financasSimples.Views/bin/Debug/net6.0/financasSimples.Views.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/financasSimples.Views/src/financasSimples.Views",
+            "stopAtEntry": false,
+            //"applicationUrl": "https://localhost:7014;http://localhost:5235",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+        },
+        {
+            "name": ".NET Core Launch (api)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-api",
+            "program": "${workspaceFolder}/financasSimples.Api/src/financasSimples.Api/bin/Debug/net6.0/financasSimples.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/financasSimples.Api/src/financasSimples.Api",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+            },
+
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

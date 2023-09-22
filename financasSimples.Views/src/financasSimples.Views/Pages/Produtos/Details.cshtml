@@ -1,0 +1,23 @@
+@page "{id:int?}"
+@model DetailsModel 
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h4>Detalhes do Produto</h4>
+<hr>
+<dl class="row my-3">
+    <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.ImagemProdutoDto)</dt>
+        <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.ImagemProdutoDto)</dd>
+    <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.NomeProdutoDto)</dt>
+        <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.NomeProdutoDto)</dd>
+    <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.VolumeProdutoDto)</dt>
+        <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.VolumeProdutoDto)</dd>
+    <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.MarcaProdutoDto)</dt>
+        <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.MarcaProdutoDto)</dd>
+    <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.DescricaoProdutoDto)</dt>
+        <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.DescricaoProdutoDto)</dd>
+</dl>
+
+<a asp-page="/Produtos/Edit" asp-route-id="@Model._produtosDto.IdProdutoDto" class="btn btn-primary">Editar</a>
+<a asp-page="./Index" class="btn btn-secondary">Voltar</a>

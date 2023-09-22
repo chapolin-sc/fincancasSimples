@@ -1,0 +1,56 @@
+@page "{id:int?}"
+@model EditModel
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h4>Editar Produto</h4>
+<hr />
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="_produtosDto.IdProdutoDto" />
+    <div class="row g-3">
+        <div class="form-group col-6">
+            <label asp-for="_produtosDto.ImagemProdutoDto" class="control-label fw-bolder"></label>
+            <input asp-for="_produtosDto.ImagemProdutoDto" class="form-control" type="file" accept="image/*" onchange="defineMiniaturaImagem(this);"/>
+            <span asp-validation-for="_produtosDto.ImagemProdutoDto" class="text-danger"></span>
+        </div>
+        <div class="form-group col-6">
+            <div class="text-center">
+                <img id="ImgCadProduto" class="border border-1" src="/Imagens/sem-foto.jpg" alt="">
+            </div>
+        </div>
+        <div class="form-group col-12">
+            <label asp-for="_produtosDto.NomeProdutoDto" class="control-label fw-bolder"></label>
+            <input asp-for="_produtosDto.NomeProdutoDto" class="form-control" />
+            <span asp-validation-for="_produtosDto.NomeProdutoDto" class="text-danger"></span>
+        </div>
+        <div class="form-group col-6">
+            <label asp-for="_produtosDto.VolumeProdutoDto" class="control-label fw-bolder"></label>
+            <input asp-for="_produtosDto.VolumeProdutoDto" class="form-control" />
+            <span asp-validation-for="_produtosDto.VolumeProdutoDto" class="text-danger"></span>
+        </div>
+        <div class="form-group col-6">
+            <label asp-for="_produtosDto.MarcaProdutoDto" class="control-label fw-bolder"></label>
+            <input asp-for="_produtosDto.MarcaProdutoDto" class="form-control" />
+            <span asp-validation-for="_produtosDto.MarcaProdutoDto" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="_produtosDto.DescricaoProdutoDto" class="control-label fw-bolder"></label>
+            <textarea asp-for="_produtosDto.DescricaoProdutoDto" class="form-control" ></textarea>
+            <span asp-validation-for="_produtosDto.DescricaoProdutoDto" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Salvar" />
+            <a asp-page="./Index" class="btn btn-secondary ">Cancelar</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <style>
+        span {
+            font-weight: bolder;
+        }
+    </style>
+}
