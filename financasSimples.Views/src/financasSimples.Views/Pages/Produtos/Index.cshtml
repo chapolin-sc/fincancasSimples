@@ -9,7 +9,7 @@
 <hr>
 <a class="btn btn-primary my-4" asp-page="/Produtos/Create">Cadastrar</a>
 
-@if(Model._produto.Count > 0){
+@if(Model._produto != null && Model._produto.Count > 0){
 <table class="table">
     <thead class="table-success">
         <tr>

@@ -17,7 +17,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddDbInfra(Configuration);
+        services.AddDbInfra(Configuration, "sqlite");
         services.AddRepositeriesInfra();
         
         services.AddScoped<IFileSaveService, FileSaveService>();
