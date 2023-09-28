@@ -77,3 +77,15 @@ Deploy application
     cd "financasSimples.Views/src/financasSimples.Views"
     dotnet lambda deploy-serverless
 ```
+
+Stack Name
+```
+    financasSimplesFrontend
+```
+
+Bucket Name
+```
+    financassimplesfrontend
+```
+
+

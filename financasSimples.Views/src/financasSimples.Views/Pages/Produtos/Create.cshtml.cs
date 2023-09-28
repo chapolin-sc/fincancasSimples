@@ -1,30 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using financasSimples.Domain.Dto;
 using System.Net.Http.Headers;
+using financasSimples.Views.ViewsModels;
 
 namespace financasSimples.Views.Pages.Produtos;
 
 public class CreateModel : PageModel
 {
+
+    /*//public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
+    public readonly string ENDPOINT = "https://zt0ailq0y9.execute-api.us-east-1.amazonaws.com/Prod/api/Produtos/";*/
+
+    public IConfiguration _configuration;
+
     [BindProperty]
-    public ProdutosDto? Produtos { get; set; }
+    public ProdutosViewModel? Produtos { get; set; }
 
     [BindProperty(Name="Produtos.ImagemProdutoDto")]
     public IFormFile? imagem { get; set; }
-
-
-
-    public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
     public readonly HttpClient httpClient = null;
 
 
 
     // Fazer por injeção de dependência
-    public CreateModel()
+    public CreateModel(IConfiguration configuration)
     {
+        _configuration = configuration;
         httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(ENDPOINT);
+        httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("ApiString"));
     }
 
     

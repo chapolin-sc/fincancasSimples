@@ -1,6 +1,5 @@
 using System.Net.Http.Headers;
-using System.Text;
-using financasSimples.Domain.Dto;
+using financasSimples.Views.ViewsModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -9,32 +8,37 @@ namespace financasSimples.Views.Pages.Produtos;
 
 public class EditModel : PageModel
 {
+    public IConfiguration _configuration { get; }
+
     [BindProperty]
-    public ProdutosDto? _produtosDto { get; set; }
+    public ProdutosViewModel? _produtosDto { get; set; }
 
     [BindProperty(Name="_produtosDto.ImagemProdutoDto")]
     public IFormFile? imagem { get; set; }
 
 
 
-    public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
+    public EditModel(IConfiguration configuration)
+    {
+        _configuration = configuration;
+        httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("ApiString"));
+    }
+
+    
+
+    //public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
+    //public string ENDPOINT = new string(_configuration.GetValue<string>("ApiString")); //"https://zt0ailq0y9.execute-api.us-east-1.amazonaws.com/Prod/api/Produtos/";
     public readonly HttpClient httpClient = null;
 
-
-
-    public EditModel()
-    {
-        httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(ENDPOINT);
-    }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
         try
         {
-            HttpResponseMessage response = await httpClient.GetAsync(ENDPOINT + id);
+            HttpResponseMessage response = await httpClient.GetAsync(id.ToString());
             string produtoString = await response.Content.ReadAsStringAsync();
-            _produtosDto = JsonConvert.DeserializeObject<ProdutosDto>(produtoString);
+            _produtosDto = JsonConvert.DeserializeObject<ProdutosViewModel>(produtoString);
             return Page();
         }
         catch (Exception ex)
@@ -46,7 +50,7 @@ public class EditModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
          //Necessário porque o campo ImagemProdutoDto na view é um tipo file e o DataAnnotations não funciona. 
-        if(imagem != null && imagem.Length > 100)
+        if(imagem != null && imagem.FileName.Length > 100)
         {
             ModelState.AddModelError("_produtosDto.ImagemProdutoDto", "O nome da imagem não pode ter mais de 100 caracteres!");
         }

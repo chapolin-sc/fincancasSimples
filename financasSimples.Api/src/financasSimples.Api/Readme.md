@@ -67,3 +67,11 @@ Deploy application
     cd "financasSimples.Api/src/financasSimples.Api"
     dotnet lambda deploy-serverless
 ```
+Stack Name
+```
+    financasSimplesBackend 
+```
+Bucket Name
+```
+    financassimplesbackend 
+```
