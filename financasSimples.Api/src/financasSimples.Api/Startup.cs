@@ -14,13 +14,15 @@ public class Startup
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container
-    public void ConfigureServices(IServiceCollection services)
+    public async void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddDbInfra(Configuration, "sqlite");
+        await services.AddDbInfraAsync(Configuration, "sqlite");
         services.AddRepositeriesInfra();
-        
+                
         services.AddScoped<IFileSaveService, FileSaveService>();
+        services.AddScoped<IMetodosAuxiliares, MetodosAuxiliares>();
+        services.AddScoped<IFileS3Transfer, FileS3Transfer>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

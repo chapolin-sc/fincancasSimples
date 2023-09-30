@@ -5,13 +5,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
+using financasSimples.Infra.ServicesInterfaces;
+using financasSimples.Infra.Services;
 
 
 namespace financasSimples.IoC;
 
 public static class DbInjection 
 {
-    public static async Task<IServiceCollection> AddDbInfra(this IServiceCollection services, IConfiguration configuration, string banco)
+    public static async Task<IServiceCollection> AddDbInfraAsync(this IServiceCollection services, IConfiguration configuration, string banco)
     {
         if(banco == "sqlite")
         {
@@ -38,9 +40,12 @@ public static class DbInjection
         return services;
     }
 
+    //Adiciona as interfaces e implementações nos serviços do api
     public static IServiceCollection AddRepositeriesInfra(this IServiceCollection services)
     {
-        services.AddScoped<IProdutosRepository, ProdutosRepository>();    
+        services.AddScoped<IProdutosRepository, ProdutosRepository>();  
+        services.AddScoped<IStoregeService, StoregeService>();
+
         return services;
     }
 }

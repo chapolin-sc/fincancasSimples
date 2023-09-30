@@ -14,14 +14,20 @@ public class ProdutosController : ControllerBase
     public readonly IProdutosRepository _produtosRepository;
     public readonly IConfiguration _Configuration;
     public readonly IFileSaveService _fileSaveService;
+    public readonly IFileS3Transfer _fileS3Transfer;
+    public readonly IMetodosAuxiliares _metodosAuxiliares;
 
-    
+    public readonly string nomeBucket = "";
 
-    public ProdutosController(IProdutosRepository produtosRepository, IConfiguration configuration, IFileSaveService fileSaveService)
+    public ProdutosController(IProdutosRepository produtosRepository, IConfiguration configuration, IFileSaveService fileSaveService,
+        IFileS3Transfer fileS3Transfer, IMetodosAuxiliares metodosAuxiliares)
     {
         _produtosRepository = produtosRepository;
         _Configuration = configuration;
         _fileSaveService = fileSaveService;
+        _fileS3Transfer = fileS3Transfer;
+        _metodosAuxiliares = metodosAuxiliares;
+        nomeBucket = _Configuration.GetSection("AwsConfiguration").GetValue<string>("AwsS3BucketImagens");
     }
 
 
@@ -33,18 +39,21 @@ public class ProdutosController : ControllerBase
         IEnumerable<ProdutosDto> produtos = new List<ProdutosDto>();
         produtos = await _produtosRepository.SelecionarTodos();
 
-        byte[] imagemBytes;
         foreach(ProdutosDto produto in produtos)
         {
-            imagemBytes = await _fileSaveService.GetArquivoAsync(produto.ImagemProdutoDto, "Imagens");
+            if(produto != null && produto.ImagemProdutoDto.Length > 0)
+            {
+                byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produto.ImagemProdutoDto, nomeBucket);
 
-            if(imagemBytes != null)
-            {
-                produto.ImagemProdutoDto = Convert.ToBase64String(imagemBytes);
-            }else
-            {
-                produto.ImagemProdutoDto = null;
-            }
+                //O codigo usa a mesma variavel que continha o nome da imagem para salvar a imagem em base64
+                if(imagemBytes != null)
+                {
+                    produto.ImagemProdutoDto = Convert.ToBase64String(imagemBytes);
+                }else
+                {
+                    produto.ImagemProdutoDto = null;
+                }
+            }   
         }
         
         return produtos;
@@ -73,14 +82,11 @@ public class ProdutosController : ControllerBase
     [HttpPost("CreateComImagem")]
     public async Task Post([FromForm]ProdutosDto produto, IFormFile imagem)
     {
-         if(imagem != null && imagem.Length > 0) 
+        if(imagem != null && imagem.Length > 0) 
         {
-            List<IFormFile> files = new List<IFormFile>();
-            List<string> imagensNomes = new List<string>();
-            
-            files.Add(imagem);
-            imagensNomes = await _fileSaveService.SaveFiles(files, "Imagens");
-            produto.ImagemProdutoDto = imagensNomes[0];
+            string novoNomeImagem = _metodosAuxiliares.GeraNovoNomeComGuid(imagem.FileName);
+            await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
+            produto.ImagemProdutoDto = novoNomeImagem;
         }
 
         await _produtosRepository.Incluir(produto);
@@ -101,14 +107,11 @@ public class ProdutosController : ControllerBase
     [HttpPut("UpComImagem/{id}")]
     public async Task<Produtos> Put(int id, [FromForm]ProdutosDto produto, IFormFile imagem)
     {
-        if(imagem != null && imagem.Length > 0) 
+         if(imagem != null && imagem.Length > 0) 
         {
-            List<IFormFile> files = new List<IFormFile>();
-            List<string> imagensNomes = new List<string>();
-            
-            files.Add(imagem);
-            imagensNomes = await _fileSaveService.SaveFiles(files, "Imagens");
-            produto.ImagemProdutoDto = imagensNomes[0];
+            string novoNomeImagem = _metodosAuxiliares.GeraNovoNomeComGuid(imagem.FileName);
+            await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
+            produto.ImagemProdutoDto = novoNomeImagem;
         }
         
         return await _produtosRepository.Alterar(id, produto);
