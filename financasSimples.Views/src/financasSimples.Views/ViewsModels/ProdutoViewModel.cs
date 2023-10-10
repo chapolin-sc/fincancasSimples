@@ -13,7 +13,7 @@ public class ProdutosViewModel
 
     [Display(Name="Imagem")]
     [StringLength(100, ErrorMessage="Ultrapassado o número de caracteres!")]
-    public string? ImagemProdutoDto { get; set; }
+    public string? ImagemProdutoNomeDto { get; set; }
 
     [Display(Name="Volume")]
     [StringLength(10, ErrorMessage="Ultrapassado o número de caracteres!")]
@@ -27,4 +27,6 @@ public class ProdutosViewModel
     [Display(Name="Descrição")]
     [StringLength(250, ErrorMessage="Ultrapassado o número de caracteres!")]
     public string? DescricaoProdutoDto { get; set; }
+
+    public string? ImagemProdutoDto { get; set; } = null!;
 }

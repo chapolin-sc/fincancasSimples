@@ -48,6 +48,7 @@ public class CreateModel : PageModel
                 using (MultipartFormDataContent multipartForm = new MultipartFormDataContent()){
 
                     string endPointIntermediario = "";
+                    //TempData["MensagemDeInteracaoComBanco"] = "";
 
                     if(imagem != null && imagem.Length > 0)
                     {
@@ -66,9 +67,11 @@ public class CreateModel : PageModel
                     multipartForm.Add(new StringContent(Produtos.DescricaoProdutoDto != null ? Produtos.DescricaoProdutoDto : ""), "DescricaoProdutoDto");
 
                     HttpResponseMessage response = await httpClient.PostAsync(endPointIntermediario, multipartForm);
+                    TempData["MensagemDeInteracaoComBanco"] = "Cadastro realizado com sucesso";
 
                     if(!response.IsSuccessStatusCode)
                     {
+                        TempData["MensagemDeInteracaoComBanco"] = "";
                         ModelState.AddModelError(null, "Erro ao tentar cadastrar o produto");
                     }
                     

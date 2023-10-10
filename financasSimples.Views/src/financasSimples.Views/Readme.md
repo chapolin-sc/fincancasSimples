@@ -80,7 +80,7 @@ Deploy application
 
 Stack Name
 ```
-    financasSimplesFrontend
+    financassimplesfrontend
 ```
 
 Bucket Name

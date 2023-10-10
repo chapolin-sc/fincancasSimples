@@ -3,11 +3,21 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Produtos";
+    var caminhoDeExlusão = ViewData["caminhoAtual"] + "/Delete/";
+    //bool cadastro = (bool) ViewData["cadastro"];
 }
 
 <h4>Lista de Produtos</h4>
 <hr>
 <a class="btn btn-primary my-4" asp-page="/Produtos/Create">Cadastrar</a>
+
+@if(TempData["MensagemDeInteracaoComBanco"] != null && (string) TempData["MensagemDeInteracaoComBanco"] != "")
+{
+    <div class="alert alert-success alert-dismissible text-center fw-bolder" role="alert">
+        @TempData["MensagemDeInteracaoComBanco"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 @if(Model._produto != null && Model._produto.Count > 0){
 <table class="table">
@@ -37,7 +47,7 @@
                     <a asp-page="/Produtos/Details" asp-route-id="@item.IdProdutoDto">
                         <i class="bi bi-file-text text-primary"></i>
                     </a> |
-                    <a onclick="PreenchePartialExclusao(@item.IdProdutoDto, '@item.NomeProdutoDto');" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <a onclick="PreenchePartialExclusao(@item.IdProdutoDto, '@item.NomeProdutoDto', '@caminhoDeExlusão');" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i class="bi bi-trash text-danger"></i>
                     </a> 
                 </td>

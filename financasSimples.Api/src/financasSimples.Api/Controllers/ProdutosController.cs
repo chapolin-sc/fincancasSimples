@@ -2,6 +2,7 @@
 using financasSimples.Domain.Dto;
 using financasSimples.Domain.Entities;
 using financasSimples.Domain.Interfaces;
+using financasSimples.Infra.Classes;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -41,21 +42,17 @@ public class ProdutosController : ControllerBase
 
         foreach(ProdutosDto produto in produtos)
         {
-            if(produto != null && produto.ImagemProdutoDto.Length > 0)
+            if(produto.ImagemProdutoNomeDto != null && produto.ImagemProdutoNomeDto.Length > 0)
             {
-                byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produto.ImagemProdutoDto, nomeBucket);
+                byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produto.ImagemProdutoNomeDto, nomeBucket);
 
                 //O codigo usa a mesma variavel que continha o nome da imagem para salvar a imagem em base64
                 if(imagemBytes != null)
                 {
                     produto.ImagemProdutoDto = Convert.ToBase64String(imagemBytes);
-                }else
-                {
-                    produto.ImagemProdutoDto = null;
                 }
             }   
         }
-        
         return produtos;
     }
 
@@ -65,7 +62,21 @@ public class ProdutosController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ProdutosDto> Get(int id)
     {
-        return await _produtosRepository.Selecionar(id);
+        ProdutosDto produtos = new ProdutosDto();
+        produtos = await _produtosRepository.Selecionar(id);
+
+        if(produtos.ImagemProdutoNomeDto != null && produtos.ImagemProdutoNomeDto.Length > 0)
+        {
+            byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produtos.ImagemProdutoNomeDto, nomeBucket);
+
+            //O codigo usa a mesma variavel que continha o nome da imagem para salvar a imagem em base64
+            if(imagemBytes != null)
+            {
+                produtos.ImagemProdutoDto = Convert.ToBase64String(imagemBytes);
+            }
+        }   
+
+        return produtos;
     }
 
 
@@ -85,8 +96,13 @@ public class ProdutosController : ControllerBase
         if(imagem != null && imagem.Length > 0) 
         {
             string novoNomeImagem = _metodosAuxiliares.GeraNovoNomeComGuid(imagem.FileName);
-            await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
-            produto.ImagemProdutoDto = novoNomeImagem;
+            ResquestResponse response = await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
+            if(response.StatusCode != 200)
+            {
+                Console.WriteLine($"Erro: {response.Mensagem}");
+            }
+
+            produto.ImagemProdutoNomeDto = novoNomeImagem;
         }
 
         await _produtosRepository.Incluir(produto);
@@ -97,7 +113,7 @@ public class ProdutosController : ControllerBase
     // PUT api/values/5
     [HttpPut("{id}")]
     public async Task<Produtos> Put(int id, [FromForm]ProdutosDto produto)
-    {        
+    {      
         return await _produtosRepository.Alterar(id, produto);
     }
 
@@ -105,16 +121,22 @@ public class ProdutosController : ControllerBase
 
     // PUT api/values/UpComImagem/5
     [HttpPut("UpComImagem/{id}")]
-    public async Task<Produtos> Put(int id, [FromForm]ProdutosDto produto, IFormFile imagem)
+    public async Task Put(int id, [FromForm]ProdutosDto produto, IFormFile imagem)
     {
          if(imagem != null && imagem.Length > 0) 
         {
             string novoNomeImagem = _metodosAuxiliares.GeraNovoNomeComGuid(imagem.FileName);
-            await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
-            produto.ImagemProdutoDto = novoNomeImagem;
+
+            ResquestResponse response = await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
+            if(response.StatusCode != 200)
+            {
+                Console.WriteLine($"Erro: {response.Mensagem}");
+            }
+           
+            produto.ImagemProdutoNomeDto = novoNomeImagem;
         }
         
-        return await _produtosRepository.Alterar(id, produto);
+        await _produtosRepository.Alterar(id, produto);
     }
 
 

@@ -5,9 +5,6 @@ namespace financasSimples.Views.Pages.Produtos;
 
 public class DeleteModel : PageModel
 {
-    /*/public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
-    public readonly string ENDPOINT = "https://zt0ailq0y9.execute-api.us-east-1.amazonaws.com/Prod/api/Produtos/";*/
-
     public IConfiguration _configuration;
     public readonly HttpClient httpClient = null;
 
@@ -26,9 +23,11 @@ public class DeleteModel : PageModel
         try
         {
             HttpResponseMessage response = await httpClient.DeleteAsync(id.ToString());
+            TempData["MensagemDeInteracaoComBanco"] = "Exclusão realizada com sucesso";
 
             if(!response.IsSuccessStatusCode)
             {
+                TempData["MensagemDeInteracaoComBanco"] = "";
                 ModelState.AddModelError(null, "Erro ao tentar cadastrar o produto");
             }
             

@@ -2,6 +2,11 @@
 @model EditModel
 @{
     ViewData["Title"] = "Editar";
+    string ImagemAtual = "/Imagens/sem-foto.jpg";
+    if(Model._produtosDto.ImagemProdutoDto != null && Model._produtosDto.ImagemProdutoDto.Length > 0)
+    {
+        ImagemAtual = "data:image/*;base64," + Model._produtosDto.ImagemProdutoDto; 
+    }
 }
 
 <h4>Editar Produto</h4>
@@ -9,6 +14,7 @@
 <form method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="_produtosDto.IdProdutoDto" />
+    <input type="hidden" asp-for="_produtosDto.ImagemProdutoNomeDto" />
     <div class="row g-3">
         <div class="form-group col-6">
             <label asp-for="_produtosDto.ImagemProdutoDto" class="control-label fw-bolder"></label>
@@ -17,7 +23,7 @@
         </div>
         <div class="form-group col-6">
             <div class="text-center">
-                <img id="ImgCadProduto" class="border border-1" src="/Imagens/sem-foto.jpg" alt="">
+                <img id="ImgCadProduto" class="border border-1" src="@ImagemAtual" alt="">
             </div>
         </div>
         <div class="form-group col-12">

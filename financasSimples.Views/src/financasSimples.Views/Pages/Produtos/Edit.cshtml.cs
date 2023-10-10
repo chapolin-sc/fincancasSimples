@@ -27,8 +27,6 @@ public class EditModel : PageModel
 
     
 
-    //public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
-    //public string ENDPOINT = new string(_configuration.GetValue<string>("ApiString")); //"https://zt0ailq0y9.execute-api.us-east-1.amazonaws.com/Prod/api/Produtos/";
     public readonly HttpClient httpClient = null;
 
 
@@ -39,6 +37,7 @@ public class EditModel : PageModel
             HttpResponseMessage response = await httpClient.GetAsync(id.ToString());
             string produtoString = await response.Content.ReadAsStringAsync();
             _produtosDto = JsonConvert.DeserializeObject<ProdutosViewModel>(produtoString);
+
             return Page();
         }
         catch (Exception ex)
@@ -62,8 +61,15 @@ public class EditModel : PageModel
                 using (MultipartFormDataContent multipartForm = new MultipartFormDataContent())
                 {
                     string endPointIntermediario = "";
+
+                    multipartForm.Add(new StringContent(_produtosDto.IdProdutoDto.ToString()), "IdProdutoDto");
+                    multipartForm.Add(new StringContent(_produtosDto.ImagemProdutoNomeDto != null ? _produtosDto.ImagemProdutoNomeDto : ""), "ImagemProdutoNomeDto");
+                    multipartForm.Add(new StringContent(_produtosDto.NomeProdutoDto), "NomeProdutoDto");
+                    multipartForm.Add(new StringContent(_produtosDto.VolumeProdutoDto), "VolumeProdutoDto");
+                    multipartForm.Add(new StringContent(_produtosDto.MarcaProdutoDto != null ? _produtosDto.MarcaProdutoDto : ""), "MarcaProdutoDto");
+                    multipartForm.Add(new StringContent(_produtosDto.DescricaoProdutoDto != null ? _produtosDto.DescricaoProdutoDto : ""), "DescricaoProdutoDto");
                     
-                    if(imagem !=  null && imagem.Length > 0)
+                    if(imagem != null && imagem.Length > 0)
                     {
                         MemoryStream memoryStream = new MemoryStream();
                         await imagem.CopyToAsync(memoryStream);
@@ -74,16 +80,12 @@ public class EditModel : PageModel
                         endPointIntermediario = "UpComImagem/";
                     }
 
-                    multipartForm.Add(new StringContent(_produtosDto.IdProdutoDto.ToString()), "IdProdutoDto");
-                    multipartForm.Add(new StringContent(_produtosDto.NomeProdutoDto), "NomeProdutoDto");
-                    multipartForm.Add(new StringContent(_produtosDto.VolumeProdutoDto), "VolumeProdutoDto");
-                    multipartForm.Add(new StringContent(_produtosDto.MarcaProdutoDto != null ? _produtosDto.MarcaProdutoDto : ""), "MarcaProdutoDto");
-                    multipartForm.Add(new StringContent(_produtosDto.DescricaoProdutoDto != null ? _produtosDto.DescricaoProdutoDto : ""), "DescricaoProdutoDto");
-
-                    HttpResponseMessage response = await httpClient.PutAsync(endPointIntermediario + _produtosDto.IdProdutoDto, multipartForm);
+                    HttpResponseMessage response = await httpClient.PutAsync(endPointIntermediario + _produtosDto.IdProdutoDto.ToString(), multipartForm);
+                    TempData["MensagemDeInteracaoComBanco"] = "Alteração realizada com sucesso";
 
                     if(!response.IsSuccessStatusCode)
                     {
+                        TempData["MensagemDeInteracaoComBanco"] = "";
                         ModelState.AddModelError(null, "Erro ao tentar salvar um produto no banco");
                     }
                     

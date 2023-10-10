@@ -1,7 +1,9 @@
 ﻿using financasSimples.Views.ViewsModels;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Web;
 
 namespace financasSimples.Views.Pages.Produtos;
 
@@ -10,11 +12,9 @@ public class IndexModel : PageModel
     private IConfiguration _configuration;
     public IList<ProdutosViewModel> _produto { get; set; }
 
-    /*//public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
-    public readonly string ENDPOINT = "https://zt0ailq0y9.execute-api.us-east-1.amazonaws.com/Prod/api/Produtos/";*/
-
 
     public readonly HttpClient httpClient = null;
+    public readonly IHttpContextAccessor _httpContext;
 
     public IndexModel(IConfiguration configuration)
     {
@@ -36,6 +36,9 @@ public class IndexModel : PageModel
 
             string produtos = await response.Content.ReadAsStringAsync();
             _produto = JsonConvert.DeserializeObject<List<ProdutosViewModel>>(produtos);
+
+            //Url atual do sistema.
+            ViewData["caminhoAtual"] = Request.GetDisplayUrl();    
 
             return Page();
         }

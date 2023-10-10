@@ -6,7 +6,7 @@ public class Produtos
   
     public int IdProduto { get; set; }
     public string NomeProduto { get; set; } = null!;
-    public string? ImagemProduto { get; set; }
+    public string? ImagemProdutoNome { get; set; }
     public string VolumeProduto { get; set; } = null!;
     public string? MarcaProduto { get; set; }
     public string? DescricaoProduto { get; set; }
@@ -19,7 +19,7 @@ public class Produtos
     public Produtos(ProdutosDto produtos)
     {
         NomeProduto = produtos.NomeProdutoDto;
-        ImagemProduto = produtos.ImagemProdutoDto;
+        ImagemProdutoNome = produtos.ImagemProdutoNomeDto;
         VolumeProduto = produtos.VolumeProdutoDto;
         MarcaProduto = produtos.MarcaProdutoDto;
         DescricaoProduto = produtos.DescricaoProdutoDto;
@@ -29,7 +29,7 @@ public class Produtos
     {
         IdProduto = id;
         NomeProduto = produtos.NomeProdutoDto;
-        ImagemProduto = produtos.ImagemProdutoDto;
+        ImagemProdutoNome = produtos.ImagemProdutoNomeDto;
         VolumeProduto = produtos.VolumeProdutoDto;
         MarcaProduto = produtos.MarcaProdutoDto;
         DescricaoProduto = produtos.DescricaoProdutoDto;

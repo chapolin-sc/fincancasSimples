@@ -26,7 +26,7 @@ public class StoregeService : IStoregeService
 
                 //Criando utilitario de tranferencia para s3
                 var transferUtility = new TransferUtility(cliente);
-                using (Stream fs = await transferUtility.OpenStreamAsync(obj.BucketNome, obj.Nome, CancellationToken.None))
+                using (Stream fs = await transferUtility.OpenStreamAsync(obj.BucketNome, obj.Nome))
                 {
                    using (MemoryStream reader = new MemoryStream())
                     {

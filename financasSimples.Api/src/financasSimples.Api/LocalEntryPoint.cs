@@ -15,6 +15,6 @@ public class LocalEntryPoint
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://localhost:9800");
+                    .UseUrls("http://localhost:9800/");
             });
 }

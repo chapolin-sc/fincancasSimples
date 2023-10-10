@@ -13,7 +13,7 @@ public class ProdutosDto
 
     [Display(Name="Imagem")]
     [StringLength(100, ErrorMessage="Ultrapassado o número de caracteres!")]
-    public string? ImagemProdutoDto { get; set; }
+    public string? ImagemProdutoNomeDto { get; set; }
 
     [Display(Name="Volume")]
     [StringLength(10, ErrorMessage="Ultrapassado o número de caracteres!")]
@@ -28,6 +28,8 @@ public class ProdutosDto
     [StringLength(250, ErrorMessage="Ultrapassado o número de caracteres!")]
     public string? DescricaoProdutoDto { get; set; }
 
+    public string? ImagemProdutoDto { get; set; } = null;
+
     public ProdutosDto()
     {
     }
@@ -36,7 +38,7 @@ public class ProdutosDto
     {
         IdProdutoDto = produtos.IdProduto;
         NomeProdutoDto = produtos.NomeProduto;
-        ImagemProdutoDto = produtos.ImagemProduto;
+        ImagemProdutoNomeDto = produtos.ImagemProdutoNome;
         VolumeProdutoDto = produtos.VolumeProduto;
         MarcaProdutoDto = produtos.MarcaProduto;
         DescricaoProdutoDto = produtos.DescricaoProduto;
@@ -46,7 +48,7 @@ public class ProdutosDto
     {
         IdProdutoDto = produtos.IdProduto;
         NomeProdutoDto = produtos.NomeProduto;
-        ImagemProdutoDto = produtos.ImagemProduto;
+        ImagemProdutoNomeDto = produtos.ImagemProdutoNome;
         VolumeProdutoDto = produtos.VolumeProduto;
         MarcaProdutoDto = produtos.MarcaProduto;
         DescricaoProdutoDto = produtos.DescricaoProduto;

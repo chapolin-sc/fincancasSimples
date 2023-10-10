@@ -5,7 +5,7 @@
 
 
 /*** Adiciona a Modal para exclusão de Produtos ***/
-function PreenchePartialExclusao(id, nome)
+function PreenchePartialExclusao(id, nome, caminho)
 {
     if(document.getElementById("Item") && document.getElementById("Excluir"))
     {
@@ -13,7 +13,7 @@ function PreenchePartialExclusao(id, nome)
         var excluir = document.getElementById("Excluir")
 
         item.innerText = nome 
-        excluir.href = "/Produtos/Delete/" + id
+        excluir.href = caminho + id
     }
 }
 /*** Final de: Adiciona a Modal para exclusão de Produtos ***/

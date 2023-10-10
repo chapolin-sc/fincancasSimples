@@ -8,7 +8,9 @@
 <hr>
 <dl class="row my-3">
     <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.ImagemProdutoDto)</dt>
-        <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.ImagemProdutoDto)</dd>
+        <dd class="col-8">
+            <img src="data:image/*;base64,@Html.DisplayFor(model => model._produtosDto.ImagemProdutoDto)" alt=""> 
+        </dd>
     <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.NomeProdutoDto)</dt>
         <dd class="col-8">@Html.DisplayFor(model => model._produtosDto.NomeProdutoDto)</dd>
     <dt class="col-4">@Html.DisplayNameFor(model => model._produtosDto.VolumeProdutoDto)</dt>
@@ -21,3 +23,11 @@
 
 <a asp-page="/Produtos/Edit" asp-route-id="@Model._produtosDto.IdProdutoDto" class="btn btn-primary">Editar</a>
 <a asp-page="./Index" class="btn btn-secondary">Voltar</a>
+
+@section Scripts {
+    <style>
+        img {
+            width: 200px;
+        }
+    </style>
+}
