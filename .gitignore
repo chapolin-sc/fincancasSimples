@@ -2,3 +2,4 @@ bin
 obj
 financasSimples.Application
 Imagens
+appsettings.Development.json

@@ -32,6 +32,12 @@ public class ProdutosController : ControllerBase
     }
 
 
+    /*[HttpGet("GetBucket")]
+    public string GetBucket()
+    {
+        return Environment.GetEnvironmentVariable("AwsS3BucketImagens") != null ? Environment.GetEnvironmentVariable("AwsS3BucketImagens") : "Sem Bucket"; 
+    }*/
+
 
     // GET api/values
     [HttpGet]

@@ -17,7 +17,6 @@ public class ProdutosRepository : IProdutosRepository
 
     public async Task<Produtos> Alterar(int id, ProdutosDto produto)
     {
-
         if(id != produto.IdProdutoDto)
         {
             return null;
@@ -75,7 +74,6 @@ public class ProdutosRepository : IProdutosRepository
         foreach(var produto in produtos)
         {
             produtoDto = new ProdutosDto(produto);
-            //produtoDto.recebeProduto(produto);
             produtoDtoList.Add(produtoDto);
         }
         /*** Codito interessante de colocar na classe produtos Fim ***/
