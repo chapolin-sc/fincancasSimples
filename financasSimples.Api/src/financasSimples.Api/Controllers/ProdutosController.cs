@@ -17,6 +17,7 @@ public class ProdutosController : ControllerBase
     public readonly IFileSaveService _fileSaveService;
     public readonly IFileS3Transfer _fileS3Transfer;
     public readonly IMetodosAuxiliares _metodosAuxiliares;
+    public readonly AwsCredenciais _credenciais = new AwsCredenciais();
 
     public readonly string nomeBucket = "";
 
@@ -28,15 +29,26 @@ public class ProdutosController : ControllerBase
         _fileSaveService = fileSaveService;
         _fileS3Transfer = fileS3Transfer;
         _metodosAuxiliares = metodosAuxiliares;
+
+        //Configurações salvas no meu arquivo appsettings.Development, chaves não compartilhadas no github
         nomeBucket = _Configuration.GetSection("AwsConfiguration").GetValue<string>("AwsS3BucketImagens");
+        _credenciais.AwsKey = _Configuration.GetSection("AwsConfiguration").GetValue<string>("AwsAccessKey");
+        _credenciais.AwsSecretKey = _Configuration.GetSection("AwsConfiguration").GetValue<string>("AwsSecretKey");
+
+
+        // ifs que acessam variaveis globais na aws, necessario para não haverem commits equivocados com chaves de acesso
+        if(Environment.GetEnvironmentVariable("AwsS3BucketImagens") != null)
+        {
+            nomeBucket = Environment.GetEnvironmentVariable("AwsS3BucketImagens");
+        }
+
+        if(Environment.GetEnvironmentVariable("AwsAccessKey") != null && Environment.GetEnvironmentVariable("AwsSecretKey") != null)
+        {
+            _credenciais.AwsKey = Environment.GetEnvironmentVariable("AwsAccessKey");
+            _credenciais.AwsSecretKey = Environment.GetEnvironmentVariable("AwsSecretKey");
+        }
     }
 
-
-    /*[HttpGet("GetBucket")]
-    public string GetBucket()
-    {
-        return Environment.GetEnvironmentVariable("AwsS3BucketImagens") != null ? Environment.GetEnvironmentVariable("AwsS3BucketImagens") : "Sem Bucket"; 
-    }*/
 
 
     // GET api/values
@@ -50,7 +62,7 @@ public class ProdutosController : ControllerBase
         {
             if(produto.ImagemProdutoNomeDto != null && produto.ImagemProdutoNomeDto.Length > 0)
             {
-                byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produto.ImagemProdutoNomeDto, nomeBucket);
+                byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produto.ImagemProdutoNomeDto, nomeBucket, _credenciais);
 
                 //O codigo usa a mesma variavel que continha o nome da imagem para salvar a imagem em base64
                 if(imagemBytes != null)
@@ -73,7 +85,7 @@ public class ProdutosController : ControllerBase
 
         if(produtos.ImagemProdutoNomeDto != null && produtos.ImagemProdutoNomeDto.Length > 0)
         {
-            byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produtos.ImagemProdutoNomeDto, nomeBucket);
+            byte[] imagemBytes = await _fileS3Transfer.DownloadFileS3Async(produtos.ImagemProdutoNomeDto, nomeBucket, _credenciais);
 
             //O codigo usa a mesma variavel que continha o nome da imagem para salvar a imagem em base64
             if(imagemBytes != null)
@@ -102,7 +114,7 @@ public class ProdutosController : ControllerBase
         if(imagem != null && imagem.Length > 0) 
         {
             string novoNomeImagem = _metodosAuxiliares.GeraNovoNomeComGuid(imagem.FileName);
-            ResquestResponse response = await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
+            ResquestResponse response = await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket, _credenciais);
             if(response.StatusCode != 200)
             {
                 Console.WriteLine($"Erro: {response.Mensagem}");
@@ -133,7 +145,7 @@ public class ProdutosController : ControllerBase
         {
             string novoNomeImagem = _metodosAuxiliares.GeraNovoNomeComGuid(imagem.FileName);
 
-            ResquestResponse response = await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket);
+            ResquestResponse response = await _fileS3Transfer.UploadFileS3Async(imagem, novoNomeImagem, nomeBucket, _credenciais);
             if(response.StatusCode != 200)
             {
                 Console.WriteLine($"Erro: {response.Mensagem}");

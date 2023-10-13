@@ -18,7 +18,7 @@ public class FileS3Transfer : IFileS3Transfer
 
 
 
-    public async Task<byte[]> DownloadFileS3Async(string nomeArquivo, string nomeBucket)
+    public async Task<byte[]> DownloadFileS3Async(string nomeArquivo, string nomeBucket, AwsCredenciais credenciais)
     {
         var objeto = new S3Objecto
         {
@@ -26,11 +26,11 @@ public class FileS3Transfer : IFileS3Transfer
             BucketNome = nomeBucket,
         };
 
-        var credenciais = new AwsCredenciais
+        /*var credenciais = new AwsCredenciais
         {
             AwsKey = _configuration.GetSection("AwsConfiguration").GetValue<string>("AwsAccessKey"),
             AwsSecretKey = _configuration.GetSection("AwsConfiguration").GetValue<string>("AwsSecretKey")
-        };
+        };*/
 
         byte[] arquivo = await _storegeService.DownloadFileS3Async(objeto, credenciais);
         
@@ -39,7 +39,7 @@ public class FileS3Transfer : IFileS3Transfer
 
 
 
-    public async Task<ResquestResponse> UploadFileS3Async(IFormFile file, string nomeArquivo, string nameBucket)
+    public async Task<ResquestResponse> UploadFileS3Async(IFormFile file, string nomeArquivo, string nameBucket, AwsCredenciais credenciais)
     {
         await using var memoryStream = new MemoryStream();
         await file.CopyToAsync(memoryStream);
@@ -51,11 +51,11 @@ public class FileS3Transfer : IFileS3Transfer
             InputStream = memoryStream
         };
 
-        var credenciais = new AwsCredenciais
+        /*var credenciais = new AwsCredenciais
         {
             AwsKey = _configuration.GetSection("AwsConfiguration").GetValue<string>("AwsAccessKey"),
             AwsSecretKey = _configuration.GetSection("AwsConfiguration").GetValue<string>("AwsSecretKey")
-        };
+        };*/
 
         ResquestResponse response = await _storegeService.UploadFileS3Async(obj, credenciais);
 
