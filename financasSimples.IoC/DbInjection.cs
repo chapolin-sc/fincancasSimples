@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using financasSimples.Infra.ServicesInterfaces;
 using financasSimples.Infra.Services;
+using financasSimples.Identity.Context;
 
 
 namespace financasSimples.IoC;
@@ -33,10 +34,15 @@ public static class DbInjection
         }
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
+
         services.AddDbContext<AppDbContext>(options => options.UseMySql(
             connectionString, ServerVersion.AutoDetect(connectionString),
                  b => b.MigrationsAssembly(typeof(AppDbContext)
                             .Assembly.FullName)));
+
+        services.AddDbContext<IdentityDataContext>(options => options.UseMySql(
+            connectionString, ServerVersion.AutoDetect(connectionString)));
+            
         return services;
     }
 

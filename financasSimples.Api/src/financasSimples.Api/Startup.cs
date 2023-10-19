@@ -17,7 +17,8 @@ public class Startup
     public async void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        await services.AddDbInfraAsync(Configuration, "sqlite");
+        
+        await services.AddDbInfraAsync(Configuration, "");
         services.AddRepositeriesInfra();
                 
         services.AddScoped<IFileSaveService, FileSaveService>();

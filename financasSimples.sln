@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0BDD4B22-033
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Views", "financasSimples.Views\src\financasSimples.Views\financasSimples.Views.csproj", "{6A008344-1358-4E60-90E0-6E8D03BF0EF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "financasSimples.Identity", "financasSimples.Identity\financasSimples.Identity.csproj", "{E0DE2499-B4E7-4A39-9DA6-F85BE75B4962}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A008344-1358-4E60-90E0-6E8D03BF0EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DE2499-B4E7-4A39-9DA6-F85BE75B4962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DE2499-B4E7-4A39-9DA6-F85BE75B4962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DE2499-B4E7-4A39-9DA6-F85BE75B4962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DE2499-B4E7-4A39-9DA6-F85BE75B4962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E818E8AA-DA1D-4A45-8D71-E6CB42420E05} = {026B9642-A062-45E7-ADCB-AEEDD774A6FC}
