@@ -22,7 +22,7 @@ public class DeleteModel : PageModel
     {
         try
         {
-            HttpResponseMessage response = await httpClient.DeleteAsync(id.ToString());
+            HttpResponseMessage response = await httpClient.DeleteAsync("Produtos/" + id.ToString());
             TempData["MensagemDeInteracaoComBanco"] = "Exclusão realizada com sucesso";
 
             if(!response.IsSuccessStatusCode)

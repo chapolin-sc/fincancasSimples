@@ -7,10 +7,6 @@ namespace financasSimples.Views.Pages.Produtos;
 
 public class CreateModel : PageModel
 {
-
-    /*//public readonly string ENDPOINT = "http://localhost:9800/api/Produtos/";
-    public readonly string ENDPOINT = "https://zt0ailq0y9.execute-api.us-east-1.amazonaws.com/Prod/api/Produtos/";*/
-
     public IConfiguration _configuration;
 
     [BindProperty]
@@ -48,7 +44,6 @@ public class CreateModel : PageModel
                 using (MultipartFormDataContent multipartForm = new MultipartFormDataContent()){
 
                     string endPointIntermediario = "";
-                    //TempData["MensagemDeInteracaoComBanco"] = "";
 
                     if(imagem != null && imagem.Length > 0)
                     {
@@ -66,7 +61,7 @@ public class CreateModel : PageModel
                     multipartForm.Add(new StringContent(Produtos.MarcaProdutoDto != null ? Produtos.MarcaProdutoDto : ""), "MarcaProdutoDto");
                     multipartForm.Add(new StringContent(Produtos.DescricaoProdutoDto != null ? Produtos.DescricaoProdutoDto : ""), "DescricaoProdutoDto");
 
-                    HttpResponseMessage response = await httpClient.PostAsync(endPointIntermediario, multipartForm);
+                    HttpResponseMessage response = await httpClient.PostAsync("Produtos/" + endPointIntermediario, multipartForm);
                     TempData["MensagemDeInteracaoComBanco"] = "Cadastro realizado com sucesso";
 
                     if(!response.IsSuccessStatusCode)

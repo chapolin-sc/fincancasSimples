@@ -26,7 +26,7 @@ public class DetailsModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-        HttpResponseMessage response = await httpClient.GetAsync(id.ToString());
+        HttpResponseMessage response = await httpClient.GetAsync("Produtos/" + id.ToString());
         if(!response.IsSuccessStatusCode)
         {
             return NotFound();

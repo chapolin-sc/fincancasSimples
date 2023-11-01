@@ -4,13 +4,22 @@
     ViewData["Title"] = "Home page";
 }
 
+@if(TempData["UsuarioCadastro"] != null && (bool)TempData["UsuarioCadastro"] == true)
+{
+    <div class="alert alert-success alert-dismissible text-center fw-bolder" role="alert">
+        Seu cadastro de usuário foi realizado com sucesso!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <p class="text-start fs-5">
     &emsp;&emsp;Olá, meu nome é Tiago de Carvalho e esse é o meu portfólio para apresentação de projetos. 
     Atualmente estou disponibilizando apenas um projeto, ele é bem simples, mas estou utilizando vários conceitos de programação 
     na sua criação. Meu objetivo é fazer parte de trabalhos como programador backend usando .Net Core, então a parte visual do projeto está o mais 
     simples possível. Basicamente fiz um cadastro de produtos (CRUD), onde um vendedor de produtos de cosmético e beleza pode 
     cadastrá-los, lê-los, editá-los e deletá-los. <br>
-    &emsp;&emsp;Se quiser testar a aplicação é só clicar na aba <span class="fw-bolder">Produtos</span> logo acima. Para este trabalho eu criei uma api rest, se você entende sobre 
-    desenvolvimento pode acessar o projeto no github neste link <a href="https://github.com/chapolin-sc/fincancasSimples">aqui</a>.
+    &emsp;&emsp;Se quiser testar a aplicação é só clicar na aba <span class="fw-bolder">Produtos</span> logo acima. Para este trabalho eu criei 
+    uma api rest, se você entende sobre desenvolvimento pode acessar o projeto no github neste 
+    link <a href="https://github.com/chapolin-sc/fincancasSimples">aqui</a>.
 </p>
 

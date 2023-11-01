@@ -11,9 +11,11 @@ public class IndexModel : PageModel
     private IConfiguration _configuration;
     public IList<ProdutosViewModel> _produto { get; set; }
 
-
     public readonly HttpClient httpClient = null;
     public readonly IHttpContextAccessor _httpContext;
+    
+
+
 
     public IndexModel(IConfiguration configuration)
     {
@@ -22,11 +24,14 @@ public class IndexModel : PageModel
         httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("ApiString"));         
     }
 
+
+
+
     public async Task<IActionResult> OnGetAsync()
     {
         try
         {
-             HttpResponseMessage response = await httpClient.GetAsync("");
+            HttpResponseMessage response = await httpClient.GetAsync("Produtos");
             if(!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError(string.Empty, "Erro ao encontrar produtos cadastrados");

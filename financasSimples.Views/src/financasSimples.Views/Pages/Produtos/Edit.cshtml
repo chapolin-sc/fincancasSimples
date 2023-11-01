@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Editar";
     string ImagemAtual = "/Imagens/sem-foto.jpg";
-    if(Model._produtosDto.ImagemProdutoDto != null && Model._produtosDto.ImagemProdutoDto.Length > 0)
+    if(Model._produtosDto != null && Model._produtosDto.ImagemProdutoDto != null && Model._produtosDto.ImagemProdutoDto.Length > 0)
     {
         ImagemAtual = "data:image/*;base64," + Model._produtosDto.ImagemProdutoDto; 
     }

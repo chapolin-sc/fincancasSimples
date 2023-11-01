@@ -8,6 +8,9 @@ using Microsoft.Data.Sqlite;
 using financasSimples.Infra.ServicesInterfaces;
 using financasSimples.Infra.Services;
 using financasSimples.Identity.Context;
+using financasSimples.Application.Interface;
+using financasSimples.Identity.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace financasSimples.IoC;
@@ -39,10 +42,22 @@ public static class DbInjection
             connectionString, ServerVersion.AutoDetect(connectionString),
                  b => b.MigrationsAssembly(typeof(AppDbContext)
                             .Assembly.FullName)));
+            
+        return services;
+    }
 
+    public static IServiceCollection AddIdentity(this IServiceCollection services,IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        
         services.AddDbContext<IdentityDataContext>(options => options.UseMySql(
             connectionString, ServerVersion.AutoDetect(connectionString)));
-            
+
+        services.AddDefaultIdentity<IdentityUser>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<IdentityDataContext>()
+            .AddDefaultTokenProviders();
+        
         return services;
     }
 
@@ -51,6 +66,7 @@ public static class DbInjection
     {
         services.AddScoped<IProdutosRepository, ProdutosRepository>();  
         services.AddScoped<IStoregeService, StoregeService>();
+        services.AddScoped<IIdentityRepository, IdentityRepository>();
 
         return services;
     }

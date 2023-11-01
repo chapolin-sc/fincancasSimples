@@ -34,7 +34,7 @@ public class EditModel : PageModel
     {
         try
         {
-            HttpResponseMessage response = await httpClient.GetAsync(id.ToString());
+            HttpResponseMessage response = await httpClient.GetAsync("Produtos/" + id.ToString());
             string produtoString = await response.Content.ReadAsStringAsync();
             _produtosDto = JsonConvert.DeserializeObject<ProdutosViewModel>(produtoString);
 
@@ -80,7 +80,7 @@ public class EditModel : PageModel
                         endPointIntermediario = "UpComImagem/";
                     }
 
-                    HttpResponseMessage response = await httpClient.PutAsync(endPointIntermediario + _produtosDto.IdProdutoDto.ToString(), multipartForm);
+                    HttpResponseMessage response = await httpClient.PutAsync("Produtos/" + endPointIntermediario + _produtosDto.IdProdutoDto.ToString(), multipartForm);
                     TempData["MensagemDeInteracaoComBanco"] = "Alteração realizada com sucesso";
 
                     if(!response.IsSuccessStatusCode)
@@ -94,7 +94,7 @@ public class EditModel : PageModel
             }
             catch (Exception ex)
             {
-                throw ex;
+                ModelState.AddModelError(string.Empty, "Problemas ao atualizar o produto");
             }
         }
         return Page();

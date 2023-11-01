@@ -1,4 +1,5 @@
-﻿using financasSimples.Api.interfaces;
+﻿using financasSimples.Api.Extensions;
+using financasSimples.Api.interfaces;
 using financasSimples.Api.Services;
 using financasSimples.IoC;
 
@@ -16,10 +17,14 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container
     public async void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+       
         
-        await services.AddDbInfraAsync(Configuration, "");
+        await services.AddDbInfraAsync(Configuration, "sqlite");
+        services.AddIdentity(Configuration);
         services.AddRepositeriesInfra();
+        services.AddAuthenticationSetup(Configuration);
+
+        services.AddControllers();
                 
         services.AddScoped<IFileSaveService, FileSaveService>();
         services.AddScoped<IMetodosAuxiliares, MetodosAuxiliares>();
@@ -38,6 +43,7 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

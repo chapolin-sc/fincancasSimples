@@ -2,8 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\financasSimples.Infra\financasSimples.Infra.csproj" />
-    <ProjectReference Include="..\financasSimples.Application\financasSimples.Application.csproj" />
-    <ProjectReference Include="..\financasSimples.Domain\financasSimples.Domain.csproj" />
     <ProjectReference Include="..\financasSimples.Identity\financasSimples.Identity.csproj" />
   </ItemGroup>
 
