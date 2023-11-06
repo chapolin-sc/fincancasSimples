@@ -1,0 +1,42 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login de usuário";
+
+    
+}
+
+<h4>Login de Usuário</h4>
+<br />
+
+@if(TempData["StatusPermissao"] != null && (System.Net.HttpStatusCode)TempData["StatusPermissao"] == System.Net.HttpStatusCode.Unauthorized){
+    <div class="alert alert-danger alert-dismissible text-center fw-bolder" role="alert">
+        É necessário efetuar o login.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <br />    
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row g-3">
+            <div class="row">
+                <div class="form-group col-6 ">
+                    <label asp-for="_Request.Login" class="control-label fw-bolder"></label>
+                    <input asp-for="_Request.Login" class="form-control"/>
+                    <span asp-validation-for="_Request.Login" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="_Request.Senha" class="control-label fw-bolder"></label>
+                    <input asp-for="_Request.Senha" class="form-control" />
+                    <span asp-validation-for="_Request.Senha" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Salvar" />
+                <a asp-page="/Index" class="btn btn-secondary ">Cancelar</a>
+            </div>
+        </div>
+</form>

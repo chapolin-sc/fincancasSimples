@@ -1,4 +1,6 @@
-﻿using financasSimples.Views.ViewsModels;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using financasSimples.Views.ViewsModels;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,7 +23,7 @@ public class IndexModel : PageModel
     {
         _configuration = configuration;
         httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("ApiString"));         
+        httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("ApiString"));    
     }
 
 
@@ -31,9 +33,20 @@ public class IndexModel : PageModel
     {
         try
         {
+            if(Request.Cookies.ContainsKey("JWTCookieFinancasUsuario"))
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Request.Cookies["JWTCookieFinancasUsuario"]);
+            }  
+            
             HttpResponseMessage response = await httpClient.GetAsync("Produtos");
             if(!response.IsSuccessStatusCode)
             {
+                if(response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    TempData["StatusPermissao"] = HttpStatusCode.Unauthorized;
+                    return RedirectToPage("../Usuarios/Login");
+                }
+                
                 ModelState.AddModelError(string.Empty, "Erro ao encontrar produtos cadastrados");
                 return Page();
             }

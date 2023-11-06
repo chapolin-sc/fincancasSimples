@@ -3,13 +3,16 @@ using financasSimples.Domain.Dto;
 using financasSimples.Domain.Entities;
 using financasSimples.Domain.Interfaces;
 using financasSimples.Infra.Classes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace financasSimples.Api.Controllers;
 
+
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProdutosController : ControllerBase
 {
     public readonly IProdutosRepository _produtosRepository;
@@ -53,6 +56,7 @@ public class ProdutosController : ControllerBase
 
     // GET api/values
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<ProdutosDto>> Get()
     {
         IEnumerable<ProdutosDto> produtos = new List<ProdutosDto>();

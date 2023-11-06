@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
 using financasSimples.Views.ViewsModels;
+using System.Net;
 
 namespace financasSimples.Views.Pages.Produtos;
 
@@ -67,15 +68,21 @@ public class CreateModel : PageModel
                     if(!response.IsSuccessStatusCode)
                     {
                         TempData["MensagemDeInteracaoComBanco"] = "";
+                        
+                        if(response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            ModelState.AddModelError(null, "Sem permição para realizar cadastros.");
+                        }
+
                         ModelState.AddModelError(null, "Erro ao tentar cadastrar o produto");
                     }
                     
                     return RedirectToPage("/Produtos/Index");
-                };
+                }
             }
             catch (Exception ex)
             {
-                throw ex;
+                return Page();
             }
             
         }

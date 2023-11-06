@@ -1,10 +1,27 @@
-<div>
-    <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item">
-            <a class="nav-link text-primary" asp-area="" asp-page="">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-primary" asp-area="" asp-page="/Usuarios/Create">Registrar</a>
-        </li>
-    </ul>
-</div>
+@if(ViewData["UsuarioLogado"] != null && (bool)ViewData["UsuarioLogado"] == true)
+{
+    <div>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <p>
+                    Usuario@hotmail.com
+                </p>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-primary" asp-area="" asp-page="/Usuarios/Create">Sair</a>
+            </li>
+        </ul>
+    </div>
+}else
+{
+    <div>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-primary" asp-area="" asp-page="/Usuarios/Login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-primary" asp-area="" asp-page="/Usuarios/Create">Registrar</a>
+            </li>
+        </ul>
+    </div>
+}

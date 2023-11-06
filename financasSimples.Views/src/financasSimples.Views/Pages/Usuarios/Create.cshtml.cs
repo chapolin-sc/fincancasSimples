@@ -12,9 +12,7 @@ public class CreateModel : PageModel
 {
     [BindProperty]
     public UsuarioCadastroRequestViewModel _Request { get; set; }
-
     public IConfiguration _configuration;
-
     public readonly HttpClient _httpClient;
 
 
